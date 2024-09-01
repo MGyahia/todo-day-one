@@ -4,10 +4,11 @@ import { DataContext, IDataContext } from "../../contexts/dataContext";
 import { ITodo } from "../../types/todo";
 
 export default function useTodoDetails() {
-	const { todos } = useContext(DataContext) as IDataContext;
+	const { todos, setDone } = useContext(DataContext) as IDataContext;
 	const { id } = useParams<{ id: string }>();
 	const todo = todos.find((todo: ITodo) => todo.id === id);
 	return {
-		todo
+		todo,
+		setDone
 	};
 }
