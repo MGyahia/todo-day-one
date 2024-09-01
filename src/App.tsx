@@ -6,13 +6,16 @@ import ErrorMessage from './components/ErrorMessage';
 import routes from './routes';
 import Router from './lib/router';
 import Loader from './components/Loader';
+import DataProvider from './contexts/dataContext';
 
 function App() {
   return (
 	<ErrorBoundary FallbackComponent={ErrorMessage}>
-		<Suspense fallback={<Loader />}>
-			<Router routes={routes}/>
-		</Suspense>
+		<DataProvider>
+			<Suspense fallback={<Loader />}>
+				<Router routes={routes}/>
+			</Suspense>
+		</DataProvider>
 	</ErrorBoundary>
   );
 }
