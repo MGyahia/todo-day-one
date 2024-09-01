@@ -1,5 +1,6 @@
 import { ITodo } from '../../types/todo';
 import TodoItem from './todoItem';
+import { List } from './TodoList.styles';
 
 export interface ITodoList {
 	list: ITodo[]
@@ -12,13 +13,13 @@ export default function TodoList({ list }: ITodoList) {
 	}
 	
 	return (
-		<ul>
+		<List>
 			{list.map((item) =>
 				<TodoItem
 					key={item.id}
 					data={item}
 				/>
 			)}
-      	</ul>
+      	</List>
 	)
 };

@@ -3,6 +3,7 @@ import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import { ITodo } from '../../types/todo';
 import { Paths } from '../../routes/paths';
+import { ListItem, Title, DateItem, Label } from './TodoItem.styles';
 
 interface ItodoItem {
 	data: ITodo
@@ -11,10 +12,10 @@ interface ItodoItem {
 export default function TodoItem({ data }: ItodoItem) {
 	const navigate = useNavigate();
 	return (
-		<li key={data.id} onClick={() => navigate(Paths.details(data.id))}>
-            <p>{data.type}</p>
-			<h4>{data.title}</h4>
-			<p>{moment(data.createdAt as Date).format('DD MMMM YYYY')}</p>
-        </li>
+		<ListItem key={data.id} onClick={() => navigate(Paths.details(data.id))}>
+            <Label>{data.type}</Label>
+			<Title done={data.isDone}>{data.title}</Title>
+			<DateItem>{moment(data.createdAt as Date).format('DD MMMM YYYY')}</DateItem>
+        </ListItem>
 	)
 }
