@@ -14,7 +14,7 @@ export default function TodoItem({ data }: ItodoItem) {
 		<li key={data.id} onClick={() => navigate(Paths.details(data.id))}>
             <p>{data.type}</p>
 			<h4>{data.title}</h4>
-			<p>{moment(data.createdAt+'').format('DD MMMM YYYY')}</p>
+			<p>{moment(data.createdAt as Date).format('DD MMMM YYYY')}</p>
         </li>
 	)
 }
