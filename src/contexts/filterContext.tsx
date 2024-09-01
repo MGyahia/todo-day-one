@@ -11,12 +11,12 @@ export const FilterContext = createContext<IFilterContext | null>(null);
 
 export default function FilterProvider({ children }: IFilterProvider) {
   
-	const [sectorFilter, setSectorFilter] = useState<Sectors | null>(null);
+	const [sectorFilter, setSectorFilter] = useState<Sectors[]>([]);
 	const [doneFilter, setDoneFilter] = useState<FilterDoneType | null>(null);
 	const [sortFilter, setSortFilter] = useState<Sorts>(Sorts.DATE_DESC);
 
 	const resetFilters = () => {
-		setSectorFilter(null);
+		setSectorFilter([]);
 		setDoneFilter(null);
 		setSortFilter(Sorts.DATE_DESC);
 	}

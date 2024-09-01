@@ -1,52 +1,39 @@
 import { useContext, useState, useEffect } from "react";
 
-import { Sorts } from "../../types/filter";
-import { Sectors, Sector } from "../../types/sector";
-
-import { DataContext, IDataContext } from "../../contexts/dataContext";
 import { FilterContext } from "../../contexts/filterContext";
 import { IFilterContext } from "../../contexts/filterContext.types";
 
-export default function useTodoList() {
-	const { todos } = useContext(DataContext) as IDataContext;
+import { useQuery } from '@apollo/client';
+import { GET_TODO_LIST } from './todoList.query';
+import { ITodo } from "src/types/todo";
 
+
+export default function useTodoList() {
+	const [todos, setTodos] = useState<ITodo[]>([]);
+	
 	const {
 		sectorFilter,
 		doneFilter,
 		sortFilter
 	} = useContext(FilterContext) as IFilterContext;
-
-	const [filtredTodos, setFiltredTodos] = useState(todos);
-
+	
+	const { loading, error, data } = useQuery(GET_TODO_LIST, {
+		variables: {
+			filters: {
+				...sectorFilter && sectorFilter.length > 0 ? {types: sectorFilter} : {},
+				...doneFilter ? {isDone: doneFilter} : {}
+			},
+			orderBy: sortFilter
+		},
+	});
 
 	useEffect(() => {
-		const filtred_todos = todos
-			.filter((todo) => {
-				if (sectorFilter) {
-					const BusinessSector: Sector[] = [Sectors.Communication, Sectors.Marketing];
-					if (sectorFilter === Sectors.Business) {
-						return BusinessSector.includes(todo.type);
-					}
-					if (todo.type !== sectorFilter) return false;
-				}
-				return true;
-			})
-			.filter((todo) => {
-				if (doneFilter !== null && todo.isDone !== !!doneFilter) return false;
-				return true;
-			})
-			.sort((a, b) => {
-				const dateA = new Date(a.createdAt as Date).getTime();
-				const dateB = new Date(b.createdAt as Date).getTime();
-				return sortFilter === Sorts.DATE_ASC ? dateA - dateB : dateB - dateA;
-			});
-		setFiltredTodos(filtred_todos);
-	}, [sectorFilter, doneFilter, sortFilter, todos]);
-
-
-
+		if (data?.getTodoList) setTodos(data?.getTodoList);
+	}, [data])
 
 	return {
-		todos: filtredTodos
+		todos,
+		loading,
+		error
 	}
 }

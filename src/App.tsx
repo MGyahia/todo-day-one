@@ -7,19 +7,19 @@ import routes from './routes';
 import Router from './lib/router';
 import Loader from './components/Loader';
 
-import DataProvider from './contexts/dataContext';
+import MyApolloProvider from "./lib/apollo";
 import FilterProvider from './contexts/filterContext';
 
 function App() {
   return (
 	<ErrorBoundary FallbackComponent={ErrorMessage}>
-		<DataProvider>
+		<MyApolloProvider>
 			<FilterProvider>
 				<Suspense fallback={<Loader />}>
 					<Router routes={routes}/>
 				</Suspense>
 			</FilterProvider>
-		</DataProvider>
+		</MyApolloProvider>
 	</ErrorBoundary>
   );
 }

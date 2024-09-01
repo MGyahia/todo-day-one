@@ -6,7 +6,10 @@ import useTodoDetails from './todoDetails.hook';
 
 export default function TodoDetail() {
 	const navigate = useNavigate();
-  	const {todo, setDone} = useTodoDetails();
+  	const {todo, setDone, loading, error} = useTodoDetails();
+
+	if (loading) return <p>Loading...</p>;
+  	if (error) return <p>Error: {error.message}</p>;
 
 	if (!todo) {
 		return (
@@ -28,7 +31,7 @@ export default function TodoDetail() {
 			<p>Type: {todo.type}</p>
 			<p>Created At: {moment(todo.createdAt as Date).format('DD MMMM YYYY')}</p>
 			<p>Status: {todo.isDone ? 'Completed' : 'Not Completed'}</p>
-			<button onClick={() => setDone(todo)}>
+			<button onClick={() => setDone(!todo.isDone)}>
 				{todo.isDone ? 'Mark as Incomplete' : 'Mark as Complete'}
 			</button>
 		</div>

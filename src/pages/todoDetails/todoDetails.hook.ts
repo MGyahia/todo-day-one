@@ -1,14 +1,32 @@
-import { useContext } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
-import { DataContext, IDataContext } from "../../contexts/dataContext";
 import { ITodo } from "../../types/todo";
+import { useQuery, useMutation } from '@apollo/client';
+import { GET_TODO_BY_ID, UPDATE_TODO } from "./todoDetails.query";
 
 export default function useTodoDetails() {
-	const { todos, setDone } = useContext(DataContext) as IDataContext;
+	
+	const [todo, setTodo] = useState<ITodo>();
 	const { id } = useParams<{ id: string }>();
-	const todo = todos.find((todo: ITodo) => todo.id === id);
+	const [updateTodoStatusById] = useMutation(UPDATE_TODO);
+	const { loading, error, data } = useQuery(GET_TODO_BY_ID, {
+		variables: {
+			id
+		},
+	});
+
+	useEffect(() => {
+		if (data?.getTodoById) setTodo(data?.getTodoById);
+	}, [data]);
+
+	const setDone = (isDone: boolean) => {
+		updateTodoStatusById({ variables: { id, isDone } });
+	};
+
 	return {
 		todo,
-		setDone
+		setDone,
+		loading,
+		error
 	};
 }

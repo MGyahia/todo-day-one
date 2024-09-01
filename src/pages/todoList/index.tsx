@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useTodoList from './todoList.hook';
 import TodoList from '../../components/todo/todoList';
 
@@ -9,8 +9,11 @@ import FilterReset from '../../components/filter/FilterReset';
 
 export default function TodoListPage() {
 
-	const { todos } = useTodoList();
+	const { todos, error, loading } = useTodoList();
 
+	if (loading) return <p>Loading...</p>;
+  	if (error) return <p>Error: {error.message}</p>;
+	
   	return (
 		<div>
 			<h1>TODO List</h1>
