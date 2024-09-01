@@ -12,7 +12,7 @@ export default function FilterDone() {
 			if (!stringVal) return setDoneFilter(null);
 			return setDoneFilter(stringVal === 'true');
 		}}>
-			<option value={''}>{'All'}</option>
+			<option value={''}>{'-- Choose State --'}</option>
 			<option value={'true'}>{'Done'}</option>
 			<option value={'false'}>{'Not Done'}</option>
 		</select>

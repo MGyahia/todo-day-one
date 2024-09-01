@@ -19,6 +19,7 @@ export default function FilterSector() {
 				options.filter(option =>  sectorFilter.includes(option.label))
 			}
 		 	isMulti
+			placeholder='Filter Sectors'
 			onChange={data => {
 				const values = data.map(d => d.value) || [];
 				if (values.includes(Sectors.Business)) {

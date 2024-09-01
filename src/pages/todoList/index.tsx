@@ -20,6 +20,9 @@ export default function TodoListPage() {
 
 			<div>
 				<FilterSector />
+			</div>
+			
+			<div>
 				<FilterDone />
 				<FilterSort />
 				<FilterReset />

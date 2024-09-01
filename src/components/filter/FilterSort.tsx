@@ -16,8 +16,8 @@ export default function FilterSort() {
 				return setSortFilter(stringVal as Sorts);
 			}}
 		>
-			<option value={Sorts.DATE_DESC}>Desc</option>
-			<option value={Sorts.DATE_ASC}>Asc</option>
+			<option value={Sorts.DATE_DESC}>Order Desc</option>
+			<option value={Sorts.DATE_ASC}>Order Asc</option>
 		</select>
 	)
 }
